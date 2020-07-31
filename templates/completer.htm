@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://www.jq22.com/demo/jQuery-completer20160525/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>演示：jQuery自动完成插件：completer</title>
+<meta name="keywords" content="jquery">
+<meta name="description" content="jQuery自动完成插件：completer">
+<link rel="stylesheet" type="text/css" href="./completer_files/completer.css">
+<link rel="stylesheet" href="./completer_files/bootstrap.css">
+<style type="text/css">
+.demo{width:360px;margin:50px auto 10px auto;padding:10px;}
+.demo p{line-height:30px}
+</style>
+<script src="./completer_files/jquery.min.js"></script><script src="./completer_files/jquery.min(1).js"></script>
+<script src="./completer_files/completer.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#auto-complete-email").completer({
+		separator: "@",
+		source: ["163.com", "qq.com", "126.com", "139.com", "gmail.com", "hotmail.com", "icloud.com"]
+	});
+	$("#auto-complete-time").completer({
+		filter: function(val) {
+			val = val.replace(/\D/g, "").substr(0, 2);
+
+			if (val) {
+				val = parseInt(val, 10) || 0;
+				val = val > 23 ? 23 : val < 10 ? "0" + val : val;
+			}
+
+			return val;
+		},
+		separator: ":",
+		source: ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"]
+	});
+	
+	var $autoCompleteDomain = $("#auto-complete-domain"),
+	$autoCompleteGo = $("#auto-complete-go");
+
+	$autoCompleteDomain.completer({
+		complete: function() {
+			var url = "http://www." + $autoCompleteDomain.val();
+
+			$autoCompleteGo.attr("href", url);
+		},
+		separator: ".",
+		source: ["com", "net", "org", "co", "io", "me", "cn", "com.cn"]
+	});
+
+});
+</script>
+</head>
+<body>
+<div id="main">
+<div class="demo">
+<p>1、输入邮箱号：</p>
+<input type="text" id="auto-complete-email" class="form-control" placeholder="E-mail" autocomplete="off">
+<p>&nbsp;</p>
+<p>2、输入时间：</p>
+<input type="text" id="auto-complete-time" class="form-control" autocomplete="off">
+<p>&nbsp;</p>
+<p>3、输入域名：</p>
+<div class="input-group">
+<span class="input-group-addon">www.</span>
+<input id="auto-complete-domain" class="form-control" type="text" placeholder="请输入域名" autocomplete="off" style="z-index:0"> <span class="input-group-btn"><a id="auto-complete-go" class="btn btn-default" href="javascript:void(0);">Go!</a></span>
+</div>
+</div>
+</div>
+
+
+<ul class="completer-container" style="display: none; min-width: 340px; z-index: 1; left: 382px; top: 134px;"></ul><ul class="completer-container" style="display: none; min-width: 340px; z-index: 1; left: 382px; top: 248px;"></ul><ul class="completer-container" style="display: none; min-width: 232px; z-index: 1; left: 442px; top: 362px;"></ul></body></html>
